@@ -3,6 +3,7 @@ var path = require("path");
 var app = express();
 var bodyParser = require('body-parser');
 var session = require('express-session');
+const {Client} = require('pg');
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -16,9 +17,32 @@ app.use(session({
     cookie: { maxAge: 60000 }
   }))
 
+const client = new Client({
+    user:'admin',
+    host:'host.docker.internal',
+    database:'test_db',
+    password:'mypassword',
+    port:5432,
+});
+
+client.connect().then(() => {
+    client.query('SELECT NOW()', (err,res) => {
+        console.log(res.rows)
+    });
+}).catch((err) => {
+    console.log(err)
+});
+
 app.get('/', function(req, res) {
+    client.query('SELECT * FROM testing', (err,res) => {
+        if(err){
+            console.log(err.stack)
+        } else {
+            console.log(res.rows[0])
+        }
+    });
     if ("counter" in req.session) {
-        req.session["counter"] += 1;
+        req.session["counter"] += 1;           
     } else {
         req.session["counter"] = 0;
     }
