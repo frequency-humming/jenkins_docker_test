@@ -2,11 +2,8 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var bodyParser = require('body-parser');
-<<<<<<< HEAD
 var session = require('express-session');
 const {Client} = require('pg');
-=======
->>>>>>> parent of 90e32e9... adding session
 
 app.use(bodyParser.urlencoded({extended: true}));
 
