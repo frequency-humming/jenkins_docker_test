@@ -2,20 +2,17 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var bodyParser = require('body-parser');
+<<<<<<< HEAD
 var session = require('express-session');
 const {Client} = require('pg');
+=======
+>>>>>>> parent of 90e32e9... adding session
 
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
-app.use(session({
-    secret: 'test',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 }
-  }))
 
 const client = new Client({
     user:'admin',
